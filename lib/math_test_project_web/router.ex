@@ -7,7 +7,9 @@ defmodule MathTestProjectWeb.Router do
     plug :fetch_live_flash
     plug :put_root_layout, html: {MathTestProjectWeb.Layouts, :root}
     plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug :put_secure_browser_headers, %{
+      "content-security-policy" => "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'"
+    }
   end
 
   pipeline :api do
@@ -18,6 +20,8 @@ defmodule MathTestProjectWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/addition", AdditionLive
+    live "/subtraction", SubtractionLive
   end
 
   # Other scopes may use custom stacks.

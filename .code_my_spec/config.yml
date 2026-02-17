@@ -5,3 +5,19 @@ docs_repo:
 module_name: MathTestProject
 name: Math Test Project
 project_id: d7f466a1-591e-4f36-8319-42633f59411e
+account_id: "0f27281c-240b-4d6d-8e52-9c5972329522"
+current_user_email: "johns10@gmail.com"
+ignored_components: 
+  - MathTestProject.Mailer
+  - MathTestProject.Repo
+  - MathTestProjectWeb.Repo
+  - MathTestProjectWeb.CoreComponents
+  - MathTestProjectWeb.Endpoint
+  - MathTestProjectWeb.ErrorHTML
+  - MathTestProjectWeb.ErrorJSON
+  - MathTestProjectWeb.Gettext
+  - MathTestProjectWeb.Layouts
+  - MathTestProjectWeb.PageController
+  - MathTestProjectWeb.PageHTML
+  - MathTestProjectWeb.Router
+  - MathTestProjectWeb.Telemetry

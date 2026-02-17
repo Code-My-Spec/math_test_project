@@ -10,7 +10,8 @@ defmodule MathTestProject.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      compilers: [:phoenix_live_view] ++ Mix.compilers(),
+      compilers: compilers(Mix.env()),
+      spex: [pattern: "test/spex/**/*_spex.exs"],
       listeners: [Phoenix.CodeReloader]
     ]
   end
@@ -27,12 +28,17 @@ defmodule MathTestProject.MixProject do
 
   def cli do
     [
-      preferred_envs: [precommit: :test]
+      preferred_envs: [precommit: :test, spex: :test]
     ]
   end
 
+  # Specifies compilers per environment.
+  # :spex compiler (from client_utils) is only available in test.
+  defp compilers(:test), do: [:boundary, :phoenix_live_view, :erlang, :elixir, :spex, :app]
+  defp compilers(_), do: [:boundary, :phoenix_live_view, :erlang, :elixir, :app]
+
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "test/support", "test/spex"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -66,10 +72,11 @@ defmodule MathTestProject.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
+      {:boundary, "~> 0.10"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:client_utils, "~> 0.1.12", only: :test},
       {:sobelow, "~> 0.14", only: [:dev, :test], runtime: false},
-      {:sexy_spex, "~> 0.1.0", only: :test}
+      {:sexy_spex, path: "/Users/johndavenport/Documents/github/spex"}
     ]
   end
 
@@ -92,6 +99,7 @@ defmodule MathTestProject.MixProject do
         "esbuild math_test_project --minify",
         "phx.digest"
       ],
+      spex: ["spex --quiet"],
       precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
     ]
   end

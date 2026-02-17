@@ -17,6 +17,8 @@ defmodule MathTestProjectWeb do
   those modules here.
   """
 
+  use Boundary, deps: [MathTestProject], exports: [ConnCase, Endpoint]
+
   def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
 
   def router do
@@ -88,8 +90,8 @@ defmodule MathTestProjectWeb do
       import MathTestProjectWeb.CoreComponents
 
       # Common modules used in templates
-      alias Phoenix.LiveView.JS
       alias MathTestProjectWeb.Layouts
+      alias Phoenix.LiveView.JS
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
